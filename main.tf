@@ -10,15 +10,14 @@ terraform {
 
 provider "render" {
   # Nota: Se recomienda usar variables para estos valores por seguridad
-  api_key  = "rnd_mssGbarKHPQfQdJgGlRyzJfJGOUP" 
-  owner_id = "usr-d3biv8u3jp1c738c024g"
+  api_key  = var.render_api_key
+  owner_id = var.render_owner_id
 }
 
 # RECURSO: BASE DE DATOS POSTGRESQL
-# Requisito: Migrar a PostgreSQL 
 resource "render_postgres" "db_proyecto" {
   name     = "cubi12-db-postgres"
-  plan     = "starter" # Requisito: Plan económico de pago 
+  plan     = "starter"
   region   = "oregon"
   version  = "15"
 
@@ -29,7 +28,7 @@ resource "render_postgres" "db_proyecto" {
 # 3. RECURSO: BACKEND (API Dockerizada)
 resource "render_web_service" "backend_api" {
   name   = "cubi12-backend"
-  plan   = "starter" # Requisito 
+  plan   = "starter"
   region = "oregon"
 
   runtime_source = {
